@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "apollo": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/apollo-mcp-server", "python", "-m", "apollo_mcp.server"],
+      "env": {
+        "APOLLO_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
