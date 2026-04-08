@@ -14,6 +14,8 @@ Provides 34 tools for sales outreach automation including:
 - Analytics and reporting
 """
 
+import os
+
 from mcp.server.fastmcp import FastMCP
 
 from apollo_mcp.tools import register_all_tools
@@ -26,7 +28,11 @@ def create_server() -> FastMCP:
     Returns:
         Configured FastMCP server instance with all Apollo tools registered.
     """
-    mcp = FastMCP("Apollo MCP Server")
+    mcp = FastMCP(
+        "Apollo MCP Server",
+        host=os.environ.get("HOST", "0.0.0.0"),
+        port=int(os.environ.get("PORT", 8000)),
+    )
 
     # Register all Apollo tools
     register_all_tools(mcp)
@@ -37,7 +43,8 @@ def create_server() -> FastMCP:
 def run_server():
     """Run the Apollo MCP server."""
     mcp = create_server()
-    mcp.run()
+    transport = os.environ.get("MCP_TRANSPORT", "sse")
+    mcp.run(transport=transport)
 
 
 # Lazy-loaded server instance
